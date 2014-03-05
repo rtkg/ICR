@@ -8,10 +8,10 @@ options.mu=0.6;
 options.scale=1e-3;
 
 addpath ./object_generation; 
-[E,n] = generate_ellipse(1,.5,60,1);
-%P=generate_P(OBJ{1},options);
+%[E,n] = generate_ellipse(1,.5,60,1);
+P=generate_P(OBJ{1},options);
 rmpath ./object_generation; 
-return
+
 
 FV.faces=P(1).faces;
 FV.vertices=P(1).vertices;
