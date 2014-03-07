@@ -1,6 +1,6 @@
 function G = randomGrasp(P,K)
 
-pts=[P(1:end).v]';
+pts=[P(1:end).p]';
 G=[];
 while (isempty(G))
     ran=[];
