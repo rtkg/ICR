@@ -16,6 +16,8 @@ psz_alpha=0.4;
 addpath ./object_generation; 
 addpath ./plot; 
 addpath ./clean_ICR; 
+addpath ./verification; 
+
 P = generate_P_ellipse(options.mu,options.disc,options.plot_flag);
 
 G=[20 44 50 11];%G=[1 37 25]; %G=randomGrasp(P,nF);
@@ -28,12 +30,12 @@ S = computeSearchZones(P,G,alpha);
 %plotSearchZoneRoa(S(1),1.5,4,'green',1); hold on;
 %plotObjectWrenchSpace(P);
 
-icr=computeICR(P,S);
-cols{1}=[0 0 1];
-cols{2}=[0 0 1];
-cols{3}=[0 0 1];
-cols{4}=[0 0 1];
-plotICR(icr,P,cols,4);
+% icr=computeICR(P,S);
+% cols{1}=[0 0 1];
+% cols{2}=[0 0 1];
+% cols{3}=[0 0 1];
+% cols{4}=[0 0 1];
+% plotICR(icr,P,cols,4);
 
 % icr_roa=computeICRRoa(P,S);
 % hold on;
@@ -46,14 +48,16 @@ plotICR(icr,P,cols,4);
 % end  
 
 icr_dang=computeICRDang(P,S);
-hold on;
-for n=1:numel(icr_dang)
-    if isempty(icr_dang(n).ind)
-        continue;
-    end    
-   v=[P(icr_dang(n).ind).v]';
-   plot(v(:,1),v(:,2),'rd','MarkerSize',10); 
-end  
+% hold on;
+% for n=1:numel(icr_dang)
+%     if isempty(icr_dang(n).ind)
+%         continue;
+%     end    
+%    v=[P(icr_dang(n).ind).v]';
+%    plot(v(:,1),v(:,2),'rd','MarkerSize',10); 
+% end  
+G_inv=gotchaTest(P,S,icr_dang);
+
 
 axis equal; rotate3d on;
 
