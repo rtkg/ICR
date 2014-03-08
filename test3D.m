@@ -15,6 +15,7 @@ psz_alpha=0.4;
 
 addpath ./object_generation; 
 addpath ./plot; 
+addpath ./clean_ICR; 
 P = generate_P_ellipse(options.mu,options.disc,options.plot_flag);
 
 G=[1 37 25]; %G=randomGrasp(P,nF);
@@ -22,14 +23,13 @@ S = computeSearchZones(P,G,alpha);
 
 %plotGraspWrenchSpace(S,gws_col,gws_alpha); hold on;
 plotExertableWrenchSpace(S,ews_col,ews_alpha); hold on;
+plotPrimitiveSearchZone(S(2).psz(1),1.5,4,psz_col,psz_alpha); hold on;
+plotPrimitiveSearchZone(S(2).psz(2),1.5,4,psz_col,psz_alpha); hold on;
 
-f_id=1;
-psz_id=1;
-plotPrimitiveSearchZone(S(f_id).psz(psz_id),1.5,4,psz_col,psz_alpha);
-
+icr=computeICR(P,S);
 axis equal; rotate3d on;
 
-
+icr2=invariant_ICR_sphere(G,P,alpha,0,0);
 
 
 

@@ -1,4 +1,5 @@
 function OBJ=read_wobj(fullfilename)
+fullfilename
 % Read the objects from a Wavefront OBJ file
 %
 % OBJ=read_wobj(filename);

@@ -23,5 +23,5 @@ end
 scale=varargin{2};
 for i=1:size(FV.vertices,1);
     p1=FV.vertices(i,:); p2=FV.vertices(i,:)-scale*P(1).normals(i,:);
-    plot3([p1(1) p2(1)],[p1(2) p2(2)],[p1(3) p2(3)],'g-');
+    plot3([p1(1) p2(1)],[p1(2) p2(2)],[p1(3) p2(3)],'b-');
 end

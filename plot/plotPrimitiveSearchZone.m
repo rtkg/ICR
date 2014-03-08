@@ -1,5 +1,9 @@
 function plotPrimitiveSearchZone(psz,r,h,col,alpha)
-%Plots the primivite search sone psz by intersecting it with a cylinder of radius r and height +/-h
+%Plots the 3D primivite search sone psz by intersecting it with a cylinder of radius r and height +/-h
+
+if (size(psz.H,2) ~= 3)
+    error('Primitive search zone needs to live in 3D');
+end    
 
 tol=1e-4;
 %compute a cylinder for the intersection
@@ -24,7 +28,7 @@ for h=1:size(PSZ.H,1)
            V=[V;v'];
        end   
    end  
-   plot(Polyhedron(V),'Color',col,'Alpha',alpha);
+   plot(Polyhedron(V),'Color',col,'Alpha',alpha); hold on;
 end    
-
+hold off;
 

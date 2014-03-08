@@ -2,6 +2,7 @@ clear all; close all; clc;
 
 OBJ{1}='models/Sprayflask_5k.obj';
 OBJ{2}='models/beer_can.obj';
+OBJ{3}='models/Shampoo_5k.obj';
 
 options.grasp_type='hf';
 options.Nc=8;
@@ -10,11 +11,11 @@ options.scale=1e-3;
 
 addpath ./object_generation;
 addpath /home/rkg/ros/generic/aass_icr/libicr/icrcpp/debug/
-icr=generate_ICRcpp();
+%icr=generate_ICRcpp();
 %[E,n] = generate_ellipse(1,.5,60,1);
-P=generate_P(OBJ{2},options);
+P=generate_P(OBJ{3},options);
 
-plotObject(P);
+plotObject(P,[],0.01);
 
 cols{1}=[1 0 0];
 cols{2}=[0 0 1];
