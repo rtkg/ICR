@@ -14,10 +14,10 @@ for n=1:numel(icr)
    plot3(v(:,1),v(:,2),v(:,3),'o','Color',cols{n},'MarkerSize',scale,'MarkerFaceColor',cols{n}); 
 end    
 
-if nargin > 4
-    scale=varargin{2}
-end   
 for n=1:numel(icr)
    v=[P(icr(n).ind).v]';
-   plot3(v(1,1),v(1,2),v(1,3),'o','Color',cols{n},'MarkerSize',scale,'MarkerFaceColor',cols{n}); 
+   plot3(v(1,1),v(1,2),v(1,3),'o','Color',cols{n},'MarkerSize',scale,'MarkerFaceColor',cols{n}); ...
+       hold on;
 end  
+hold off;
+%EOF

@@ -10,8 +10,8 @@ function P = generate_P_ellipse(mu,disc,plot_flag)
 % Output:
 % -------
 % P - structure containing description of an ellipse
-% P(i).p - i-th point
-% P(i).n - unit normal vector associated with P(i).p
+% P(i).v - i-th vertex
+% P(i).n - unit normal vector associated with P(i).v
 % P(i).nb_i - indexes of the neighboring points of point i
 % P(i).n_nb - number of neighboring points of point i
 % P(i).w - wrenche(s) associated with point i (depend on grasp_type)
@@ -39,7 +39,7 @@ P(1).lambda=max(lambda);
 
 
 for i=1:N
-    P(i).p = [pts(:,i);0]; % point
+    P(i).v = [pts(:,i);0]; % point
     P(i).n = [vn(:,i);0]; % normal
     
     % neighbors
@@ -53,7 +53,7 @@ for i=1:N
     P(i).n_nb = 2;
     
     if mu == 0
-        t = cross(P(i).p,P(i).n); % torque
+        t = cross(P(i).v,P(i).n); % torque
         P(i).w = [P(i).n(1:2);t(3)]; % wrench
     else
         % -----------------------------------
@@ -67,15 +67,15 @@ for i=1:N
             for k=1:length(mu_d)
                 P(i).cf(:,k) = P(i).n(1:2)+mu_vector*mu_d(k);
                 P(i).cf(:,k) = P(i).cf(:,k)/norm(P(i).cf(:,k));
-                t(:,k) = cross(P(i).p,[P(i).cf(:,k);0]);
+                t(:,k) = cross(P(i).v,[P(i).cf(:,k);0]);
             end            
         else % this is the real version (equal to the above if interpN=2)
             P(i).cf(:,1) = P(i).n(1:2)+mu_vector;
             P(i).cf(:,2) = P(i).n(1:2)-mu_vector;
             P(i).cf(:,1) = P(i).cf(:,1)/norm(P(i).cf(:,1));
             P(i).cf(:,2) = P(i).cf(:,2)/norm(P(i).cf(:,2));
-            t(:,1) = cross(P(i).p,[P(i).cf(:,1);0]);
-            t(:,2) = cross(P(i).p,[P(i).cf(:,2);0]);
+            t(:,1) = cross(P(i).v,[P(i).cf(:,1);0]);
+            t(:,2) = cross(P(i).v,[P(i).cf(:,2);0]);
         end
         
         P(i).w = [P(i).cf;t(3,:)]; % wrenches with the cone forces
@@ -83,7 +83,7 @@ for i=1:N
         % ------------------------------------------------------------
         % testing
         % ------------------------------------------------------------
-        tn = cross(P(i).p,P(i).n);
+        tn = cross(P(i).v,P(i).n);
         P(i).wn = [P(i).n(1:2);tn(3)]; % wrench with the normal force
     
         % just to see whether the CH will change (and YES it does)
@@ -101,7 +101,7 @@ if plot_flag && mu~=0
     hold on;
     for i=1:N
         for j=1:interpN
-            plot([P(i).p(1) P(i).p(1)+P(i).cf(1,j)],[P(i).p(2) P(i).p(2)+P(i).cf(2,j)],'b');
+            plot([P(i).v(1) P(i).v(1)+P(i).cf(1,j)],[P(i).v(2) P(i).v(2)+P(i).cf(2,j)],'b');
         end
     end
 end
