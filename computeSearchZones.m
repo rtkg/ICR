@@ -1,4 +1,4 @@
-function S = computeSearchZones(P,G,Qr)
+function S = computeSearchZones(P,G,alpha)
 %
 
 % Qr - scaling factor for the OCIS of the prototype grasp's GWS in order to
@@ -14,6 +14,8 @@ W=[P(G).w]';
 if (origin_in_ch ~= 1)
     error('Provided grasp is not force closure - cannot compute search zones');
 end
+ 
+e=min(s.b)*alpha;
 
 for n=1:nF
     map_vertex2finger(n)=n*L;
@@ -48,7 +50,7 @@ for v=1:length(v_ids) %iterates throug the vertex indices of the GWS
             %add facet h to the primitive search zone assoicated with wrench
             %v_ids(v)
             S(f_id).psz(end).H=[S(f_id).psz(end).H; s.A(h,:)];
-            S(f_id).psz(end).e=[S(f_id).psz(end).e; s.b(h)];
+            S(f_id).psz(end).e=[S(f_id).psz(end).e; e];
         end        
     end
 end
