@@ -1,6 +1,6 @@
 clear all; close all; clc;
 
-mu=0.5;
+mu=0.1;
 disc=60;
 alpha=0.5;
 nF=3;
@@ -32,7 +32,7 @@ S = computeSearchZones(P,G,alpha);
 %plotExertableWrenchSpace(S,ews_col,ews_alpha); hold on;
 %plotPrimitiveSearchZone(S(1).psz(1),1.5,4,psz_col,psz_alpha); hold on;
 %plotPrimitiveSearchZone(S(1).psz(2),1.5,4,psz_col,psz_alpha); hold on;
-%plotPrimitiveSearchZone(S(1).psz(2),1.5,4,psz_col,psz_alpha); hold on;
+%plotPrimitiveSearchZone(S(1).psz(3),1.5,4,psz_col,psz_alpha); hold on;
 %plotSearchZoneRoa(S(1),1.5,4,'green',1); hold on;
 %plotObjectWrenchSpace(P);
 
