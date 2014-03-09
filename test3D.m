@@ -1,10 +1,14 @@
 clear all; close all; clc;
 
-options.mu=0.4;
-options.disc=60;
-options.plot_flag=0;
-alpha=0.32;
+mu=0.5;
+disc=60;
+alpha=0.5;
 nF=3;
+options.plot_flag=0;
+options.fl_wrench=1;
+options.scale_lmbd=1;
+
+P = generate_P_ellipse(mu,disc,options);
 
 gws_col='red';
 gws_alpha=0.4;
@@ -18,19 +22,21 @@ addpath ./plot;
 addpath ./clean_ICR; 
 addpath ./verification; 
 
-P = generate_P_ellipse(options.mu,options.disc,options.plot_flag);
+P = generate_P_ellipse(mu,disc,options);
 
-G=[20 44 50 11];%G=[1 37 25]; %G=randomGrasp(P,nF);
+G=[1 37 25]; %G=randomGrasp(P,nF); %G=[20 44 50 11];
+G=randomGrasp(P,nF);
 S = computeSearchZones(P,G,alpha);
 
 %plotGraspWrenchSpace(S,gws_col,gws_alpha); hold on;
 %plotExertableWrenchSpace(S,ews_col,ews_alpha); hold on;
 %plotPrimitiveSearchZone(S(1).psz(1),1.5,4,psz_col,psz_alpha); hold on;
 %plotPrimitiveSearchZone(S(1).psz(2),1.5,4,psz_col,psz_alpha); hold on;
+%plotPrimitiveSearchZone(S(1).psz(2),1.5,4,psz_col,psz_alpha); hold on;
 %plotSearchZoneRoa(S(1),1.5,4,'green',1); hold on;
 %plotObjectWrenchSpace(P);
 
-% icr=computeICR(P,S);
+ icr=computeICR(P,S);
 % cols{1}=[0 0 1];
 % cols{2}=[0 0 1];
 % cols{3}=[0 0 1];
@@ -56,9 +62,10 @@ icr_dang=computeICRDang(P,S);
 %    v=[P(icr_dang(n).ind).v]';
 %    plot(v(:,1),v(:,2),'rd','MarkerSize',10); 
 % end  
-G_inv=gotchaTest(P,S,icr_dang);
+%G_inv=gotchaTest(P,S,icr_dang);
 
-
+icr.ind
+icr_dang.ind
 axis equal; rotate3d on;
 
 

@@ -1,12 +1,20 @@
 clear all; close all; clc;
+%e.g G=[34, 33, 42] is invalid for mu/alpha=0.5
 
-options.mu=0.5;
-options.disc=60;
-options.plot_flag=0;
+addpath ./object_generation; 
+addpath ./plot; 
+addpath ./clean_ICR; 
+addpath ./verification; 
+
+mu=0.5;
+disc=60;
 alpha=0.5;
 nF=3;
+options.plot_flag=1;
+options.fl_wrench=1;
+options.scale_lmbd=1;
 
-P = generate_P_ellipse(options.mu,options.disc,options.plot_flag);
+P = generate_P_ellipse(mu,disc,options);
 
 while(1)
     G=randomGrasp(P,nF);

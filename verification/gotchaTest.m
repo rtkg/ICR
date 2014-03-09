@@ -1,5 +1,5 @@
 function inv_G=gotchaTest(P,S,icr)
-
+%Brute force check whether the GWS of all possible ICR-grasps contain the EWS
 
 H=[]; e=[]; W=[];
 for i=1:length(S)
@@ -26,13 +26,13 @@ for i=1:nc
     end   
        
     W=[P(comb(i,:)).w]';
-    try
-        [o s]=force_closure_test_QR(W);
-    catch
-        message='Caught Qhull-exception, skipping...';
-        disp(message);
-        continue;        
-    end
+    % try
+    %     [o s]=force_closure_test_QR(W);
+    % catch
+    %     message='Caught Qhull-exception, skipping...';
+    %     disp(message);
+    %     continue;        
+    % end
 
    GWS=Polyhedron(W);
    if (~GWS.contains(EWS))
