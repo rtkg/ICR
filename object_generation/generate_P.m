@@ -31,12 +31,12 @@ function P = generate_P(obj_file,options)
 O=read_wobj(obj_file);
 FV.vertices=O.vertices;
 FV.faces=O.objects(end).data.vertices;
-normals=patchnormals(FV);
+normals=O.vertices_normal;
+%normals=patchnormals(FV);
 N = size(FV.vertices,1);
 
 P(1).faces = FV.faces;
 P(1).vertices = FV.vertices;
-P(1).normals = normals;
 
 lmbd=0;
 for i=1:N
@@ -44,44 +44,55 @@ for i=1:N
     P(i).n = normals(i,:)'; % normal
     
     if (norm(P(i).v) > lmbd)
-      lmbd=norm(P(i).v);
+        lmbd=norm(P(i).v);
     end
-      
+    
     [P(i).nb_i,P(i).NbOfNeighbors] = get_neighbors(i,FV.vertices,FV.faces);
 
     switch options.grasp_type
-        case 'fl'
-            P(i).w = [P(i).n;cross(P(i).v,P(i).n)]; % wrench due to the normal force
+      case 'fl'
+        P(i).w = [P(i).n;cross(P(i).v,P(i).n)]; % wrench due to the normal force
 
-       
-        case 'hf'
-            P(i).cf = generate_cone(P(i).n,options.mu,options.Nc,P(i).v,0); %generation of the cone forces
-            for j=1:options.Nc
-                t(:,j)=cross(P(i).v,P(i).cf(:,j)); %generation of the Nc cf-torques     
-            end
+        
+      case 'hf'
+        
+        
+        P(i).cf = generate_cone(P(i).n,options.mu,options.Nc,P(i).v,0); %generation of the cone forces
+        for j=1:options.Nc
+            t(:,j)=cross(P(i).v,P(i).cf(:,j)); %generation of the Nc cf-torques     
+        end
+        
+        if (options.fl_wrench);
+            P(i).w = [[P(i).n;cross(P(i).v,P(i).n)] [P(i).cf;t]];
+        else
             P(i).w = [P(i).cf;t];
-      
-      
-        case 'sf'
-            P(i).cf = generate_cone(P(i).n,options.mu,options.Nc,P(i).v,0); %generation of the cone forces
-            for j=1:Nc
-                t(:,j)=cross(P(i).p,P(i).cf(:,j)); %generation of the Nc cf-torques
-            end
-            % finger torques in direction of the vertex-normals
-            P(i).w = [[P(i).cf;t] [[zeros(3,1); P(i).n] [zeros(3,1); -P(i).n]]];
+        end
+        
+      case 'sf'
+        P(i).cf = generate_cone(P(i).n,options.mu,options.Nc,P(i).v,0); %generation of the cone forces
+        for j=1:Nc
+            t(:,j)=cross(P(i).p,P(i).cf(:,j)); %generation of the Nc cf-torques
+        end
 
-        otherwise
-            error('Unknown grasp type')
+        % finger torques in direction of the vertex-normals
+        if (options.fl_wrench);
+            P(i).w = [[P(i).n;cross(P(i).v,P(i).n)] [P(i).cf;t] [[zeros(3,1); P(i).n] [zeros(3,1); -P(i).n]]];
+        else
+            P(i).w = [[P(i).cf;t] [[zeros(3,1); P(i).n] [zeros(3,1); -P(i).n]]];
+        end
+        
+      otherwise
+        error('Unknown grasp type')
     end
     P(i).e = 0; % explored (1) or not (0)
 end
 
 if options.scale_torque
-   for i=1:N
-      for j=1:size(P(i).w,2)
-         P(i).w(4:6,j)=P(i).w(4:6,j)/lmbd;
-      end    
-   end    
+    for i=1:N
+        for j=1:size(P(i).w,2)
+            P(i).w(4:6,j)=P(i).w(4:6,j)/lmbd;
+        end    
+    end    
 end    
 
 

@@ -8,8 +8,6 @@ options.plot_flag=0;
 options.fl_wrench=1;
 options.scale_lmbd=1;
 
-P = generate_P_ellipse(mu,disc,options);
-
 gws_col='red';
 gws_alpha=0.4;
 ews_col='yellow';

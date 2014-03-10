@@ -90,11 +90,11 @@ for n = 1:N
                             % option 1:  solve an LP
                             % -------------------------------
                             D = [-ones(H(lv),1), A(rho_nl{n}{lv},:)*P(s).w; De];
-                            
+                                                                               
                             ctype=repmat('U',H(lv)+1,1);
                             ctype(H(lv)+1) = 'S'; % equality constraint
-                            x_feasib = glpk(f_obj,D,[b(1:H(lv));1],lb,ub,ctype,vartype,1,param);
-                            
+                            [x_feasib, fmin,status,extra] = glpk(f_obj,D,[b(1:H(lv));1],lb,ub,ctype,vartype,1,param);
+                                                            
                             if x_feasib(1) > 1e-15
                                 exit_flag = 1;
                             end
@@ -167,3 +167,4 @@ if plot_flag
 end
 
 %%%EOF
+
