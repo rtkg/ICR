@@ -1,10 +1,10 @@
 clear all; close all; clc;
 
 name{1}='Fish_5k';
-% name{2}='RedCup_5k';
-% name{3}='ShowerGel_5k';
-% name{4}='Sprayflask_5k';
-% name{5}='Tortoise_5k';
+name{2}='Sprayflask_5k';
+name{3}='ShowerGel_5k';
+name{4}='RedCup_5k';
+name{5}='Tortoise_5k';
 
 for i=1:numel(name)
     CT=load(strcat(name{i},'_CT.txt'));

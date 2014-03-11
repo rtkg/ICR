@@ -2,10 +2,10 @@ clear all; close all; clc;
 
 savepath='../tilt/';
 name{1}='Fish_5k';
-% name{2}='RedCup_5k';
-% name{3}='ShowerGel_5k';
-% name{4}='Sprayflask_5k';
-% name{5}='Tortoise_5k';
+name{2}='RedCup_5k';
+name{3}='ShowerGel_5k';
+name{4}='Sprayflask_5k';
+name{5}='Tortoise_5k';
 
 des_L=8;
 des_mu=0.5;
