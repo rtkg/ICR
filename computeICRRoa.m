@@ -22,7 +22,6 @@ for n=1:nF
         %point doesn't qualify for inclusion into region n 
         if(min(max(H*w+repmat(e,1,nW))) < 0)
             icr(n).ind=[icr(n).ind j];  
-            keyboard
         end        
     end    
     icr(n).N=length(icr(n).ind);    

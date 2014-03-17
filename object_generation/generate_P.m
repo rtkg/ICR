@@ -11,6 +11,9 @@ function P = generate_P(obj_file,options)
 % options.Nc - number of vectors for approximating the friction cone
 % options.mu - friction coefficient
 % options.scale - factor with which the loaded vertices are scaled
+% options.fl_wrench - if true, the wrench corresponding to the normal force will be added to the
+% wrench cone
+% options.scale_torque - if true, the wrench-torques are scaled by the largest torque arm
 
 %
 % Output:

@@ -71,7 +71,7 @@ for i=1:N
         if fl_wrench
             interpN=3;
         else
-            inerpN=2;
+            interpN=2;
         end
         
         mu_d = linspace(-1,1,interpN);
