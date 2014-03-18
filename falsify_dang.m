@@ -48,7 +48,7 @@ for i=1:size(G_inv,1)
     
     figure; plotObjectWrenchSpace(P); hold on;
     plotExertableWrenchSpace(S,'yellow',1); hold on; rotate3d on;
-    plot(GWS_inv,'Color','blue','Alpha',0.4); hold on;
+     plot(GWS_inv,'Color','blue','Alpha',0.4); hold on;
     for n=1:nF
         for i=1:numel(S(n).psz)
             %   plotPrimitiveSearchZone(S(n).psz(i),1.2,1,'green',0.8);hold on;
@@ -65,12 +65,12 @@ for i=1:size(G_inv,1)
     plot(I(:,1),I(:,2),'bo','MarkerSize',4,'MarkerFaceColor','b');
     plot(I_d(:,1),I_d(:,2),'md','MarkerSize',10);
     if(~isempty(I_r))
-    plot(I_r(:,1),I_r(:,2),'gs','MarkerSize',6);
+        plot(I_r(:,1),I_r(:,2),'gs','MarkerSize',6);
     end
-        g=[P(G).v]';
+    g=[P(G).v]';
     plot(g(:,1),g(:,2),'ro','MarkerSize',6,'MarkerFaceColor','r'); 
     g_t=1.1*[P(G_test).v]';
-        plot(g_t(:,1),g_t(:,2),'mh','MarkerSize',6,'MarkerFaceColor','r'); 
+    plot(g_t(:,1),g_t(:,2),'mh','MarkerSize',6,'MarkerFaceColor','r'); 
     
     keyboard;
     close all;
