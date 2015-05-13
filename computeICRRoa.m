@@ -6,10 +6,22 @@ nP=length(P);
 
 icr(nF).ind=[];
 for n=1:nF
-    for j=1:nP
+    queue = G(n);
+    explored = zeros(nP,1);
+    while ~isempty(queue)
         inclusion_test=true;
-        w=P(j).w;
-        nW=size(P(j).w,2);
+        
+        %FIND INDEX HERE
+        id=queue(1);
+        queue(1)=[]; %pop front
+        if (explored(id) == 1)
+            continue; %if the current point is explored, try the next one
+        else
+            explored(id) = 1; %set the current point as explored  
+        end   
+        
+        w=P(id).w;
+        nW=size(P(id).w,2);
         
         %concatenate all primitive search zones -> intersection
         H=[]; e=[];
@@ -21,8 +33,12 @@ for n=1:nF
         %if none of the primitive wrenches lies inside the intersection of primitive search zones, the
         %point doesn't qualify for inclusion into region n 
         if(min(max(H*w+repmat(e,1,nW))) < 0)
-            icr(n).ind=[icr(n).ind j];  
+            icr(n).ind=[icr(n).ind id];  
+            queue=[queue; P(id).nb_i'];
+        elseif options.check_all_flag
+            queue=[queue; P(id).nb_i'];
         end        
+        
     end    
     icr(n).N=length(icr(n).ind);    
 end    

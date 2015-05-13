@@ -1,7 +1,7 @@
 clear; close;%clc
 
 plot_flag = 1;
-LP_flag = 0;
+LP_flag = 1;
 w_norm_flag = 1;
 
 file_name{1} = './vrml/cup_luigi_centered.wrl';
@@ -18,7 +18,7 @@ discr =8;
 alpha = 0.5;
 origin_offset = [0;0;0;0;0;0];
 
-P = generate_P(file_name{1},grasp_type,discr,mu,w_norm_flag);
+P = generate_P_scaled(file_name{1},grasp_type,discr,mu,w_norm_flag);
 
 
 tic

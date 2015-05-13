@@ -15,10 +15,12 @@ nV_EWS=size(V_EWS,2);
 
 comb=allcomb(icr.ind);
 nc=size(comb,1);
-
+'number of test grasps:'
+nc
 inv_G=[];
 count=0;
-for i=1:nc    
+for i=1:nc
+    i
     G=comb(i,:);
     %skip in case two ore more regions contain the same point
     if (length(unique(G)) < length(G))

@@ -1,5 +1,5 @@
 clear all; close all; clc;
-%e.g  G=[ 25     1    36] for fl_wrench=1, mu=Qs=0.8
+%e.g  G=[ 25     1    36] for fl_wrench=1, mu=Q=0.8
 %e.g  G=[29 33 59 3] for fl_wrench=0, mu=Qs=0.8
 addpath ./third_party;
 addpath ./object_generation; 
@@ -10,7 +10,7 @@ addpath ./verification;
 mu=0.8;
 disc=60;
 Qs=0.8;
-nF=3;
+nF=4;
 options.plot_flag=0;
 options.fl_wrench=1;
 options.scale_lmbd=1;
@@ -19,7 +19,8 @@ P = generate_P_ellipse(mu,disc,options);
 
 while(1)
     G=randomGrasp(P,nF);
-    % G= [  51    13    41];
+    %  G= [4 24 40 55];
+
     S = computeSearchZones(P,G,Qs);
     icr=computeICR(P,S);
     icr_dang=computeICRDang(P,S);
@@ -28,15 +29,16 @@ while(1)
     for i=1:nF
         icr_diff(i).ind=[G(i) setdiff(icr_dang(i).ind, icr(i).ind)];
     end    
-    
-    %make regions in icr_diff unique for comparison
-    for i=2:nF
-        I=intersect(icr_diff(i).ind,icr_diff(i-1).ind);
-        icr_diff(i).ind=setdiff(icr_diff(i).ind, I);
-    end    
+
+    %make regions in icr_diff unique for comparison    
+    for i=1:nF-1
+        for j=i+1:nF
+         icr_diff(i).ind = setdiff(icr_diff(i).ind, icr_diff(j).ind);
+        end
+    end
 
     G_inv=gotchaTest(P,S,icr_diff);
-
+keyboard
     if (~isempty(G_inv))
         break;
     end  

@@ -1,19 +1,11 @@
 clear all; close all; clc;
 
 mu=0.1;
-disc=60;
 alpha=0.5;
 nF=3;
 options.plot_flag=0;
 options.fl_wrench=1;
 options.scale_lmbd=1;
-
-gws_col='red';
-gws_alpha=0.4;
-ews_col='yellow';
-ews_alpha=0.8;
-psz_col='magenta';
-psz_alpha=0.4;
 
 addpath ./object_generation; 
 addpath ./plot; 
